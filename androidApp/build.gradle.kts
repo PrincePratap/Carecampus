@@ -18,6 +18,14 @@ dependencies {
 
     implementation(libs.compose.uiToolingPreview)
     debugImplementation(libs.compose.uiTooling)
+
+    implementation(compose.preview)
+    implementation(libs.androidx.activity.compose)
+
+    implementation("io.insert-koin:koin-android:4.1.1")
+
+    implementation(libs.ktor.client.okhttp)
+
 }
 
 android {

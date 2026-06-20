@@ -41,6 +41,13 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.compose.uiToolingPreview)
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+
+            implementation("io.insert-koin:koin-android:4.1.1")
+
+            implementation(libs.ktor.client.okhttp)
+
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)

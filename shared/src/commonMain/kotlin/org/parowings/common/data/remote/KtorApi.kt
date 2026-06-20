@@ -40,7 +40,7 @@ val httpClientConfig: HttpClientConfig<*>.() -> Unit = {
 
     // Default request configuration that applies to every call
     defaultRequest {
-        url("https://haievents.com")
+        url("https://paro-wings.onrender.com")
         contentType(ContentType.Application.Json)
     }
 

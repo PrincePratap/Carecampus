@@ -5,10 +5,8 @@ plugins {
     alias(libs.plugins.androidMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-//    id("com.google.devtools.ksp") version "2.2.20-2.0.2"
-//    kotlin("plugin.serialization") version "2.2.20"
-//    id("com.google.devtools.ksp") version "2.4.0-1.0.26"
-//    kotlin("plugin.serialization")
+    alias(libs.plugins.kotlinSerialization)
+//    alias(libs.plugins.googleGmsGoogleServices)
 }
 
 kotlin {
@@ -45,6 +43,15 @@ kotlin {
             implementation(libs.androidx.activity.compose)
 
             implementation("io.insert-koin:koin-android:4.1.1")
+
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.compose.uiToolingPreview)
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+
+            implementation("io.insert-koin:koin-android:4.1.1")
+
+            implementation("androidx.datastore:datastore-preferences:1.1.7")
 
             implementation(libs.ktor.client.okhttp)
 
@@ -87,6 +94,9 @@ kotlin {
 //            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
             // Serialization
 //            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
+//            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.serialization.json)
+
 
             implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
             // Voyager bottom navigation (if needed)
@@ -111,6 +121,8 @@ kotlin {
 //            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
 
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+            implementation("cafe.adriel.voyager:voyager-navigator:1.1.0-beta03")
+            implementation("cafe.adriel.voyager:voyager-transitions:1.1.0-beta03")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -119,5 +131,9 @@ kotlin {
 }
 
 dependencies {
+//    implementation(libs.firebase.auth)
+//    implementation(libs.androidx.credentials)
+//    implementation(libs.androidx.credentials.play.services.auth)
+//    implementation(libs.googleid)
     androidRuntimeClasspath(libs.compose.uiTooling)
 }

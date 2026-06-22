@@ -29,3 +29,5 @@ data class AuthResultData(
     val phone: String,
     val token: String
 )
+
+

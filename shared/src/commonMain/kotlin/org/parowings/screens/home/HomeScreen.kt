@@ -16,6 +16,7 @@ import androidx.compose.material.icons.outlined.Pets
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import org.koin.core.qualifier.named
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,6 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.parowings.screens.common.CustomBottomNavigation
+import org.koin.compose.koinInject
+import org.koin.core.qualifier.named
 
 // Custom Pastel Colors from the image
 val CardBlue = Color(0xFFE1F5FE)
@@ -114,25 +118,36 @@ fun HeaderSection() {
         }
 
         // Right Profile Section
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "Hi, David",
-                fontSize = 14.sp,
-                color = Color.Gray,
-                modifier = Modifier.padding(end = 8.dp)
-            )
-            // Profile Image Placeholder
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFA5D6A7)),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-                // In a real app, use Image() here
-                Icon(Icons.Default.Person, contentDescription = null, tint = Color.White)
-            }
-        }
+//        Row(verticalAlignment = Alignment.CenterVertically) {
+//            val signOutAction: (() -> Unit)? = try {
+//                GlobalContext.get().get<() -> Unit>(qualifier = named("googleSignOut"))
+//            } catch (t: Throwable) {
+//                null
+//            }
+//
+//            signOutAction?.let { signOut ->
+//                TextButton(onClick = { signOut() }) {
+//                    Text(text = "Sign out")
+//                }
+//            }
+//            Text(
+//                text = "Hi, David",
+//                fontSize = 14.sp,
+//                color = Color.Gray,
+//                modifier = Modifier.padding(end = 8.dp)
+//            )
+//            // Profile Image Placeholder
+//            Box(
+//                modifier = Modifier
+//                    .size(40.dp)
+//                    .clip(CircleShape)
+//                    .background(Color(0xFFA5D6A7)),
+//                contentAlignment = Alignment.BottomCenter
+//            ) {
+//                // In a real app, use Image() here
+//                Icon(Icons.Default.Person, contentDescription = null, tint = Color.White)
+//            }
+//        }
     }
 }
 
@@ -170,38 +185,7 @@ fun TrainingCard(item: TrainingItem) {
     }
 }
 
-@Composable
-fun CustomBottomNavigation() {
-    Surface(
-        modifier = Modifier
-            .padding(24.dp)
-            .fillMaxWidth()
-            .height(72.dp),
-        shape = RoundedCornerShape(36.dp),
-        color = Color(0xFFF8F8F8),
-        shadowElevation = 4.dp
-    ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // Selected Item
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .background(DarkGray, CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.Default.GridView, contentDescription = null, tint = Color.White)
-            }
 
-//            Icon(Icons.Default.Bone, contentDescription = null, tint = Color.LightGray)
-            Icon(Icons.Default.Pets, contentDescription = null, tint = Color.LightGray)
-            Icon(Icons.Rounded.Settings, contentDescription = null, tint = Color.LightGray)
-        }
-    }
-}
 
 // Custom Bone icon helper since it's not in standard Material Icons
 //val Icons.Default.Bone: androidx.compose.ui.graphics.vector.ImageVector

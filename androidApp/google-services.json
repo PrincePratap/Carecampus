@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "622596442669",
+    "project_id": "parowings-dd255",
+    "storage_bucket": "parowings-dd255.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622596442669:android:f6f3e2592b24dffa7906a4",
+        "android_client_info": {
+          "package_name": "org.parowings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622596442669-4gk0pk1bfrmllsp8tgd38j7e00kn49t1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.parowings",
+            "certificate_hash": "e6eeae7410b51a50659bdcebf4fd7ec136113c3b"
+          }
+        },
+        {
+          "client_id": "622596442669-sns1dhejiqv4c95cblvn7j5fh72vogcj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXKEX8S8Xpa_vFhqiQ6QD8fxTRPTgJFQE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "622596442669-sns1dhejiqv4c95cblvn7j5fh72vogcj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,10 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserSettings(
-    val id: String ="",
-    val name: String = "",
+    val userId: String = "",
+    val fullName: String = "",
     val email: String = "",
-    val token: String = "",
+    val photoUrl: String = "",
+    val accessToken: String = "",
 )
 
 //fun UserSettings.toAuthResultData(): AuthResultData {

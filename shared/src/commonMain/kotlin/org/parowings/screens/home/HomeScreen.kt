@@ -29,27 +29,90 @@ import androidx.compose.ui.unit.sp
 import org.parowings.screens.common.CustomBottomNavigation
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
+import org.parowings.screens.common.HomeCard
+import org.parowings.theming.CardBlue
+import org.parowings.theming.CardGreen
+import org.parowings.theming.CardIndigo
+import org.parowings.theming.CardOrange
+import org.parowings.theming.CardPink
+import org.parowings.theming.CardPurple
+import org.parowings.theming.DarkGray
 
-// Custom Pastel Colors from the image
-val CardBlue = Color(0xFFE1F5FE)
-val CardPink = Color(0xFFFCE4EC)
-val CardPurple = Color(0xFFF3E5F5)
-val CardGreen = Color(0xFFE8F5E9)
-val CardOrange = Color(0xFFFFF3E0)
-val CardIndigo = Color(0xFFE8EAF6)
-val DarkGray = Color(0xFF333333)
 
-data class TrainingItem(val title: String, val color: Color)
 
+data class TrainingItem(
+    val title: String,
+    val color: Color,
+    val onClick: () -> Unit
+)
+
+
+@Preview(showBackground = true)
 @Composable
-fun HomeScreen() {
-    val trainingItems = listOf(
-        TrainingItem("Trust", CardBlue),
-        TrainingItem("Targeting", CardPink),
-        TrainingItem("Sit", CardPurple),
-        TrainingItem("Stay", CardGreen),
-        TrainingItem("Dog's Name", CardPink),
-        TrainingItem("Roll", CardIndigo)
+fun HomeScreen(
+    clickOnAnimalRescue: () -> Unit = {},
+    clickOnAdoption: () -> Unit = {},
+
+) {
+    val homeItems = listOf(
+        TrainingItem(
+            title = "Animal Rescue",
+            color = CardBlue,
+            onClick = {
+                // navigator.push(AnimalRescueScreen())
+                println("Animal Rescue")
+            }
+        ),
+        TrainingItem(
+            title = "Adoption",
+            color = CardPink,
+            onClick = {
+                clickOnAdoption()
+                println("Adoption")
+            }
+        ),
+        TrainingItem(
+            title = "NGOs",
+            color = CardPurple,
+            onClick = {
+                println("NGOs")
+            }
+        ),
+        TrainingItem(
+            title = "Training",
+            color = CardGreen,
+            onClick = {
+                println("Training")
+            }
+        ),
+        TrainingItem(
+            title = "Veterinary",
+            color = CardOrange,
+            onClick = {
+                println("Veterinary")
+            }
+        ),
+        TrainingItem(
+            title = "Lost & Found",
+            color = CardIndigo,
+            onClick = {
+                println("Lost & Found")
+            }
+        ),
+        TrainingItem(
+            title = "Donate",
+            color = CardBlue,
+            onClick = {
+                println("Donate")
+            }
+        ),
+        TrainingItem(
+            title = "Volunteers",
+            color = CardPink,
+            onClick = {
+                println("Volunteers")
+            }
+        )
     )
 
     Scaffold(
@@ -91,8 +154,8 @@ fun HomeScreen() {
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(trainingItems) { item ->
-                    TrainingCard(item)
+                items(homeItems) { item ->
+                    HomeCard(item)
                 }
             }
         }
@@ -117,84 +180,12 @@ fun HeaderSection() {
             }
         }
 
-        // Right Profile Section
-//        Row(verticalAlignment = Alignment.CenterVertically) {
-//            val signOutAction: (() -> Unit)? = try {
-//                GlobalContext.get().get<() -> Unit>(qualifier = named("googleSignOut"))
-//            } catch (t: Throwable) {
-//                null
-//            }
-//
-//            signOutAction?.let { signOut ->
-//                TextButton(onClick = { signOut() }) {
-//                    Text(text = "Sign out")
-//                }
-//            }
-//            Text(
-//                text = "Hi, David",
-//                fontSize = 14.sp,
-//                color = Color.Gray,
-//                modifier = Modifier.padding(end = 8.dp)
-//            )
-//            // Profile Image Placeholder
-//            Box(
-//                modifier = Modifier
-//                    .size(40.dp)
-//                    .clip(CircleShape)
-//                    .background(Color(0xFFA5D6A7)),
-//                contentAlignment = Alignment.BottomCenter
-//            ) {
-//                // In a real app, use Image() here
-//                Icon(Icons.Default.Person, contentDescription = null, tint = Color.White)
-//            }
-//        }
-    }
-}
-
-@Composable
-fun TrainingCard(item: TrainingItem) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(180.dp),
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = item.color)
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            // Placeholder for the Dog Illustration
-            Icon(
-                imageVector = Icons.Default.Pets,
-                contentDescription = null,
-                modifier = Modifier.size(80.dp),
-                tint = DarkGray.copy(alpha = 0.2f)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = item.title,
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
-                color = DarkGray
-            )
-        }
     }
 }
 
 
 
-// Custom Bone icon helper since it's not in standard Material Icons
-//val Icons.Default.Bone: androidx.compose.ui.graphics.vector.ImageVector
-//    get() = Icons.Default.Bento // Placeholder for visual similarity in preview
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewDogTraining() {
-    MaterialTheme {
-        HomeScreen()
-    }
-}
+
+
+

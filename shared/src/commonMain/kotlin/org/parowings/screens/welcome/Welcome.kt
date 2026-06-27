@@ -27,7 +27,7 @@ object Welcome : Screen {
 
         LaunchedEffect(userRepo) {
             userRepo.userSettingsFlow.collectLatest { settings ->
-                if (settings.id.isNotEmpty()) {
+                if (settings.userId.isNotEmpty()) {
                     navigator.replace(Home)
                 }
             }

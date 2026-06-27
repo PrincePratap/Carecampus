@@ -19,4 +19,14 @@ internal class AuthRepositoryImpl(
             }
         }
     }
+
+    override suspend fun googleLogin(request: GoogleLoginRequest): Result<GoogleLoginResponse> {
+        return withContext(dispatcher.io) {
+            try {
+                Result.Success(authService.googleLogin(request))
+            } catch (e: Exception) {
+                Result.Error(e.message ?: "Unknown error")
+            }
+        }
+    }
 }

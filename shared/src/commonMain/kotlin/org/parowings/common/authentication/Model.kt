@@ -31,3 +31,10 @@ data class AuthResultData(
 )
 
 
+//@Serializable
+//data class GoogleLoginRequest(
+//    val firebase_uid: String,
+//    val full_name: String,
+//    val email: String,
+//    val photo_url: String? = null
+//)

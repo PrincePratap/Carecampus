@@ -5,38 +5,52 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
-
-
 import cafe.adriel.voyager.transitions.SlideTransition
-
+import org.parowings.screens.common.BottomNavItem
+import org.parowings.screens.common.CustomBottomNavigation
+import org.parowings.screens.common.bottomNavItemFor
+import org.parowings.screens.common.bottomNavScreenFor
+import org.parowings.screens.common.shouldShowBottomBar
 import org.parowings.screens.welcome.Welcome
-
 
 @Composable
 fun AppAndroid(
     onRequestSignIn: () -> Unit = {}
 ) {
     MaterialTheme {
-        Scaffold { innerPadding ->
+        Navigator(Welcome) { navigator ->
+            val currentScreen = navigator.lastItem
 
-            Box(
-                modifier = Modifier.padding(innerPadding)
-            ) {
+            LaunchedEffect(currentScreen) {
+                println("Voyager current screen = " + currentScreen::class.simpleName)
+                println("shouldShowBottomBar = " + shouldShowBottomBar(currentScreen))
+            }
 
-                Navigator(Welcome) { navigator ->
+            Scaffold(
+                bottomBar = {
+                    if (shouldShowBottomBar(currentScreen)) {
+                        CustomBottomNavigation(
+                            selectedItem = bottomNavItemFor(currentScreen),
+                            onItemClick = { item ->
+                                val targetScreen: Screen = bottomNavScreenFor(item)
+                                if (currentScreen != targetScreen) {
+                                    navigator.replace(targetScreen)
+                                }
+                            }
+                        )
+                    }
+                }
+            ) { innerPadding ->
+                Box(
+                    modifier = Modifier.padding(innerPadding)
+                ) {
                     SlideTransition(navigator)
                 }
-
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AppAndroidPreview() {
-    AppAndroid()
 }

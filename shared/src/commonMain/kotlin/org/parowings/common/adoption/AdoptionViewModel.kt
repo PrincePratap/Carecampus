@@ -13,7 +13,8 @@ import org.parowings.common.data.remote.Result
 
 class AdoptionViewModel(
     private val repository: AdoptionRepository
-) : ViewModel() {
+) : ViewModel()
+{
 
     private val _uiState = MutableStateFlow(AdoptionUiState())
     val uiState: StateFlow<AdoptionUiState> = _uiState.asStateFlow()
@@ -21,8 +22,7 @@ class AdoptionViewModel(
     private val _state = MutableStateFlow<AdoptionState>(AdoptionState.Idle)
     val state: StateFlow<AdoptionState> = _state.asStateFlow()
 
-    private val _adoptionList = MutableStateFlow<List<AdoptionResponse>>(emptyList())
-    val adoptionList: StateFlow<List<AdoptionResponse>> = _adoptionList.asStateFlow()
+
 
     var isLoading by mutableStateOf(false)
         private set
@@ -57,33 +57,7 @@ class AdoptionViewModel(
         }
     }
 
-    fun getAdoptions(
-        city: String? = null,
-        animalType: String? = null
-    ) {
-        isLoading = true
-        adoption = null
-        _adoptionList.value = emptyList()
-        error = null
-        _uiState.value = AdoptionUiState(isLoading = true)
-        _state.value = AdoptionState.Loading
 
-        viewModelScope.launch {
-            when (val result = repository.getAdoptions(city, animalType)) {
-                is Result.Success -> {
-                    _adoptionList.value = result.data
-                    _uiState.value = AdoptionUiState(adoptionList = result.data)
-                    _state.value = AdoptionState.SuccessList(result.data)
-                }
-                is Result.Error -> {
-                    error = result.message
-                    _uiState.value = AdoptionUiState(error = result.message)
-                    _state.value = AdoptionState.Error(result.message)
-                }
-            }
-            isLoading = false
-        }
-    }
 }
 
 data class AdoptionUiState(

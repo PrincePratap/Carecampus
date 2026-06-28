@@ -38,4 +38,12 @@ internal class AdoptionServiceImpl(private val client: HttpClient) : AdoptionSer
         }.body<AdoptionListResponse>()
         return response.data
     }
+
+    override suspend fun getAdoptionById(id: String): AdoptionResponse {
+        return client.get("/adoptions/$id").body()
+    }
+
+    override suspend fun getMyAdoptions(ownerId: String): MyAdoptionsResponse {
+        return client.get("/adoptions/my/$ownerId").body()
+    }
 }

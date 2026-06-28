@@ -5,8 +5,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.parowings.screens.adoption.petAdoption.PetAdoption
-import org.parowings.screens.authentication.signup.SignUpScreen
-
 
 
 object Home : Screen {

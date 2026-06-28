@@ -9,4 +9,8 @@ internal interface AdoptionService {
         city: String? = null,
         animalType: String? = null
     ): List<AdoptionResponse>
+
+    suspend fun getAdoptionById(id: String): AdoptionResponse
+
+    suspend fun getMyAdoptions(ownerId: String): MyAdoptionsResponse
 }

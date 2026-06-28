@@ -1,8 +1,19 @@
 package org.parowings.screens.adoption.petAdoption
 
-
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -18,18 +29,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.parowings.common.adoption.AdoptionResponse
 
-
-
 @Composable
 fun PetAdoptionScreen(
-    petList: List<AdoptionResponse> = emptyList()
+    petList: List<AdoptionResponse> = emptyList(),
+    isLoading: Boolean = false,
+    error: String? = null,
+    onAdoptionClick: (String) -> Unit = {}
 ) {
     Scaffold(
         containerColor = Color.White
@@ -43,12 +54,31 @@ fun PetAdoptionScreen(
 
             FilterCategoryRow()
 
+            if (isLoading) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            if (error != null) {
+                Text(
+                    text = error,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
+                )
+            }
+
             LazyColumn(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(petList) { pet ->
-                    PetCard(pet)
+                    PetCard(pet, onItemClick = { onAdoptionClick(pet.id) })
                 }
             }
         }
@@ -84,13 +114,14 @@ fun FilterCategoryRow() {
 }
 
 @Composable
-fun PetCard(pet: AdoptionResponse) {
+fun PetCard(pet: AdoptionResponse , onItemClick: () -> Unit = {}) {
     Card(
         shape = RoundedCornerShape(28.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF2D2D2D)),
         modifier = Modifier
             .fillMaxWidth()
             .height(140.dp)
+            .clickable(onClick = onItemClick)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             Row(
@@ -125,12 +156,17 @@ fun PetCard(pet: AdoptionResponse) {
                         color = Color.White
                     )
                     Text(
+                        text = pet.animalType,
+                        fontSize = 13.sp,
+                        color = Color.White.copy(alpha = 0.8f)
+                    )
+                    Text(
                         text = pet.gender,
                         fontSize = 14.sp,
                         color = Color.White.copy(alpha = 0.8f)
                     )
                     Text(
-                        text = pet.age.toString(),
+                        text = "Age: ${pet.age}",
                         fontSize = 14.sp,
                         color = Color.White.copy(alpha = 0.8f)
                     )
@@ -150,6 +186,11 @@ fun PetCard(pet: AdoptionResponse) {
                             color = Color.White.copy(alpha = 0.8f)
                         )
                     }
+                    Text(
+                        text = "${pet.breed} • ${pet.adoptionStatus}",
+                        fontSize = 12.sp,
+                        color = Color.White.copy(alpha = 0.75f)
+                    )
                 }
             }
 

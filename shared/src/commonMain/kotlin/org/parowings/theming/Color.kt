@@ -15,3 +15,7 @@ val DarkGray = Color(0xFF333333)
 val LightBlueBg = Color(0xFFB9D1E4)
 val DarkButton = Color(0xFF2D2D2D)
 val SecondaryText = Color(0xFF9E9E9E)
+val AppYellow = Color(0xFFFFD600)
+val CardBackground = Color.White
+val TextColor = Color.Black
+val NotificationRed = Color(0xFFFF5722)

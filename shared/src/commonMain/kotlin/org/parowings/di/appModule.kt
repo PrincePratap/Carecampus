@@ -14,6 +14,8 @@ import org.parowings.common.authentication.AuthViewModel
 import org.parowings.common.data.local.UserSettingsRepository
 import org.parowings.common.data.remote.createHttpClient
 import org.parowings.common.util.provideDispatcher
+import org.parowings.screens.adoption.petAdoption.PetAdoptionViewModel
+import kotlin.coroutines.EmptyCoroutineContext.get
 
 fun appModule() = module {
 
@@ -50,6 +52,7 @@ fun appModule() = module {
 
     factory {
         AdoptionViewModel(get())
+        PetAdoptionViewModel(get())
     }
 
 //    factory { PhonePeService(get()) }

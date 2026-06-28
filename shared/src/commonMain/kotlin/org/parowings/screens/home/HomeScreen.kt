@@ -52,6 +52,12 @@ data class TrainingItem(
 fun HomeScreen(
     clickOnAnimalRescue: () -> Unit = {},
     clickOnAdoption: () -> Unit = {},
+    clickOnNGOs: () -> Unit = {},
+    clickOnTraining: () -> Unit = {},
+    clickOnVeterinary: () -> Unit = {},
+    clickOnLostFound: () -> Unit = {},
+    clickOnDonate: () -> Unit = {},
+    clickOnVolunteers: () -> Unit = {}
 
 ) {
     val homeItems = listOf(
@@ -82,6 +88,7 @@ fun HomeScreen(
             title = "Training",
             color = CardGreen,
             onClick = {
+                clickOnTraining()
                 println("Training")
             }
         ),
@@ -116,7 +123,6 @@ fun HomeScreen(
     )
 
     Scaffold(
-        bottomBar = { CustomBottomNavigation() }
     ) { paddingValues ->
         Column(
             modifier = Modifier

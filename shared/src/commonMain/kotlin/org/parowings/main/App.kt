@@ -5,39 +5,48 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import org.parowings.screens.welcome.ErrorFallbackScreen
+import org.parowings.screens.common.BottomNavItem
+import org.parowings.screens.common.CustomBottomNavigation
+import org.parowings.screens.common.bottomNavItemFor
+import org.parowings.screens.common.bottomNavScreenFor
+import org.parowings.screens.common.shouldShowBottomBar
 import org.parowings.screens.welcome.Welcome
 
 @Composable
 fun App() {
+
     MaterialTheme {
-        Scaffold { innerPadding ->
-            Box(
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                val errorMessage = remember { mutableStateOf<String?>(null) }
-                Navigator(Welcome) { navigator ->
-                    SlideTransition(navigator)
+
+        Navigator(Welcome) { navigator ->
+            val currentScreen = navigator.lastItem
+
+            Scaffold(
+                bottomBar = {
+                    if (shouldShowBottomBar(currentScreen)) {
+                        CustomBottomNavigation(
+                            selectedItem = bottomNavItemFor(currentScreen),
+                            onItemClick = { item ->
+                                val targetScreen: Screen = bottomNavScreenFor(item)
+                                if (currentScreen != targetScreen) {
+                                    navigator.replace(targetScreen)
+                                }
+                            }
+                        )
+                    }
                 }
 
-                errorMessage.value?.let { message ->
-                    ErrorFallbackScreen(message = message)
+            ) { innerPadding ->
+
+                Box(
+                    modifier = Modifier.padding(innerPadding)
+                ) {
+                    SlideTransition(navigator)
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun AppPreview() {
-    MaterialTheme {
-        ErrorFallbackScreen(message = "Preview")
     }
 }

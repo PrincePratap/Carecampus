@@ -1,14 +1,33 @@
 package org.parowings.screens.adoption.petDetail
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,165 +37,196 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.parowings.common.adoption.AdoptionResponse
 import org.parowings.theming.DarkButton
-import org.parowings.theming.LightBlueBg
-import org.parowings.theming.SecondaryText
 
-// --- Custom Colors ---
-val ChipBg = Color(0xFFE9F1F7)
+private val DetailBackground = Color(0xFFF4F7FB)
+private val DetailCardBackground = Color.White
+private val DetailMutedText = Color(0xFF64748B)
 
-
-@Preview(showBackground = true)
 @Composable
-fun PetDetailScreen() {
+@Preview(showBackground = true)
+fun PetDetailScreen(
+    adoption: AdoptionResponse? = null,
+    isLoading: Boolean = false,
+    error: String? = null,
+    onBack: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(LightBlueBg)
+            .background(DetailBackground)
     ) {
-        // --- Top Section: Image & Navigation ---
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Back Button
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 48.dp, start = 24.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    modifier = Modifier.size(28.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            // Dog Image Container
-            Box(
-                modifier = Modifier
-                    .size(300.dp)
-                    .clip(CircleShape)
-                    .background(Color.White.copy(alpha = 0.5f)),
-                contentAlignment = Alignment.Center
-            ) {
-                // Placeholder for Mikka's Image
+        when {
+            isLoading -> {
                 Box(
-                    modifier = Modifier
-                        .size(260.dp)
-                        .clip(CircleShape)
-                        .background(Color.LightGray)
-                )
-            }
-
-            // Carousel Indicators
-            Row(
-                modifier = Modifier
-                    .padding(top = 16.dp, start = 32.dp)
-                    .align(Alignment.Start),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(Color.White))
-                Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(Color.DarkGray))
-                Box(modifier = Modifier.size(8.dp).clip(CircleShape).background(Color.DarkGray))
-            }
-        }
-
-        // --- Bottom Section: Info Card ---
-        Surface(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .fillMaxHeight(0.55f),
-            shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
-            color = Color.White
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 24.dp, vertical = 32.dp)
-            ) {
-                // Name and Paw Heart Icon
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Column {
-                        Text(
-                            text = "Mikka",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.ExtraBold
-                        )
-                        Row(verticalAlignment = Alignment.CenterVertically) {
+                    CircularProgressIndicator()
+                }
+            }
+
+            error != null -> {
+                Box(
+                    modifier = Modifier.fillMaxSize().padding(24.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = error,
+                        color = MaterialTheme.colorScheme.error,
+                        fontSize = 16.sp
+                    )
+                }
+            }
+
+            adoption != null -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        IconButton(onClick = onBack) {
                             Icon(
-                                imageVector = Icons.Default.LocationOn,
-                                contentDescription = null,
-                                tint = SecondaryText,
-                                modifier = Modifier.size(16.dp)
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back"
                             )
+                        }
+
+                        Text(
+                            text = "Adoption Details",
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+
+                        Spacer(modifier = Modifier.width(48.dp))
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 24.dp)
+                            .height(220.dp)
+                            .clip(RoundedCornerShape(28.dp))
+                            .background(Color.White),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Box(
+                                modifier = Modifier
+                                    .size(112.dp)
+                                    .clip(CircleShape)
+                                    .background(Color(0xFFE5E7EB)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = adoption.animalName.take(1).ifEmpty { "P" },
+                                    fontSize = 40.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = DetailMutedText
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(12.dp))
                             Text(
-                                text = "2 kms away",
-                                color = SecondaryText,
-                                fontSize = 14.sp
+                                text = adoption.photoUrl,
+                                fontSize = 12.sp,
+                                color = DetailMutedText
                             )
                         }
                     }
-                    // Custom Paw Icon placeholder
-                    Icon(
-                        imageVector = Icons.Default.Favorite,
-                        contentDescription = null,
-                        tint = LightBlueBg,
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp),
+                        shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+                        color = DetailCardBackground
+                    ) {
+                        Column(modifier = Modifier.padding(24.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = adoption.animalName,
+                                        fontSize = 28.sp,
+                                        fontWeight = FontWeight.ExtraBold
+                                    )
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Icon(
+                                            imageVector = Icons.Default.LocationOn,
+                                            contentDescription = null,
+                                            tint = DetailMutedText,
+                                            modifier = Modifier.size(16.dp)
+                                        )
+                                        Text(
+                                            text = "${adoption.city}, ${adoption.state}",
+                                            color = DetailMutedText,
+                                            fontSize = 14.sp
+                                        )
+                                    }
+                                }
 
-                // Stats Chips
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    InfoChip(label = "Sex", value = "Male", modifier = Modifier.weight(1f))
-                    InfoChip(label = "Age", value = "1 year", modifier = Modifier.weight(1f))
-                    InfoChip(label = "Weight", value = "10 kg", modifier = Modifier.weight(1f))
-                }
+                                StatusChip(adoption.adoptionStatus)
+                            }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                            Spacer(modifier = Modifier.height(20.dp))
 
-                // About Section
-                Text(
-                    text = "About:",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "There are some dogs that are naturally very intelligent. They do not need to repeat the command 100 times, because they grasp everything on the fly.",
-                    color = SecondaryText,
-                    lineHeight = 20.sp,
-                    fontSize = 14.sp
-                )
+                            InfoRow("Animal Type", adoption.animalType)
+                            InfoRow("Breed", adoption.breed)
+                            InfoRow("Gender", adoption.gender)
+                            InfoRow("Age", adoption.age.toString())
+                            InfoRow("Vaccinated", adoption.vaccinated.toYesNo())
+                            InfoRow("Sterilized", adoption.sterilized.toYesNo())
+                            InfoRow("Owner Name", adoption.ownerName)
+                            InfoRow("Owner ID", adoption.ownerId)
+                            InfoRow("Contact Number", adoption.contactNumber)
+                            InfoRow("Created At", adoption.createdAt)
+                            InfoRow("Adoption ID", adoption.id)
 
-                Spacer(modifier = Modifier.weight(1f))
+                            Spacer(modifier = Modifier.height(16.dp))
 
-                // Adopt Button
-                Button(
-                    onClick = { /* Handle adoption */ },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = DarkButton),
-                    shape = RoundedCornerShape(16.dp)
-                ) {
-                    Text(
-                        text = "Adopt me",
-                        color = Color.White,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
+                            Text(
+                                text = "Description",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 18.sp
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = adoption.description,
+                                color = DetailMutedText,
+                                lineHeight = 20.sp,
+                                fontSize = 14.sp
+                            )
+
+                            Spacer(modifier = Modifier.height(24.dp))
+
+                            Button(
+                                onClick = onBack,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(54.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = DarkButton),
+                                shape = RoundedCornerShape(16.dp)
+                            ) {
+                                Text(
+                                    text = "Back",
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -184,16 +234,38 @@ fun PetDetailScreen() {
 }
 
 @Composable
-fun InfoChip(label: String, value: String, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
-            .background(ChipBg)
-            .padding(vertical = 12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = label, fontSize = 14.sp, color = Color.Black)
-        Text(text = value, fontSize = 14.sp, color = SecondaryText)
+private fun InfoRow(label: String, value: String) {
+    Column(modifier = Modifier.padding(bottom = 14.dp)) {
+        Text(
+            text = label,
+            color = DetailMutedText,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = value,
+            fontSize = 15.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        Divider(modifier = Modifier.padding(top = 12.dp), color = Color(0xFFE5E7EB))
     }
 }
 
+@Composable
+private fun StatusChip(status: String) {
+    Surface(
+        color = Color(0xFFE0F2FE),
+        shape = RoundedCornerShape(999.dp)
+    ) {
+        Text(
+            text = status,
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp),
+            color = Color(0xFF0369A1),
+            fontWeight = FontWeight.Bold,
+            fontSize = 12.sp
+        )
+    }
+}
+
+private fun Boolean.toYesNo(): String = if (this) "Yes" else "No"

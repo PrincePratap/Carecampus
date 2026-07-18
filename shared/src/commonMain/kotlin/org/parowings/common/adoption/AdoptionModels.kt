@@ -94,6 +94,64 @@ data class AdoptionResponse(
     val createdAt: String
 )
 
+
+
+
+
+@Serializable
+data class AnimalResponseDetail(
+
+    @SerialName("animal_type")
+    val animalType: String,
+
+    @SerialName("id")
+    val id: String,
+
+    @SerialName("animal_name")
+    val animalName: String,
+
+    @SerialName("age")
+    val age: Int,
+
+    @SerialName("description")
+    val description: String,
+
+    @SerialName("sterilized")
+    val sterilized: Boolean,
+
+    @SerialName("photo_url")
+    val photoUrl: String,
+
+    @SerialName("state")
+    val state: String,
+
+    @SerialName("created_at")
+    val createdAt: String,
+
+    @SerialName("owner_id")
+    val ownerId: String,
+
+    @SerialName("owner_name")
+    val ownerName: String,
+
+    @SerialName("breed")
+    val breed: String,
+
+    @SerialName("gender")
+    val gender: String,
+
+    @SerialName("vaccinated")
+    val vaccinated: Boolean,
+
+    @SerialName("adoption_status")
+    val adoptionStatus: String,
+
+    @SerialName("city")
+    val city: String,
+
+    @SerialName("contact_number")
+    val contactNumber: String
+)
 @Serializable
 data class MyAdoptionResponse(
     @SerialName("id")

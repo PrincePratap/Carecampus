@@ -212,6 +212,6 @@ fun SocialButton(symbol: String) {
 @Composable
 fun SignUpPreview() {
     MaterialTheme {
-        SignUpScreen()
+        CreateAccountScreen()
     }
 }

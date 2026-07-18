@@ -1,5 +1,6 @@
 package org.parowings.screens.common
 
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,9 +32,44 @@ import org.parowings.screens.home.Home
 import org.parowings.screens.pet.myPets.MyPets
 import org.parowings.screens.userProfile.Profile
 
+
+
+
+
+
+
+//// new code
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.*
+
+import androidx.compose.material.icons.outlined.AccountCircle
+import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.LocationOn
+import androidx.compose.material.icons.outlined.PeopleOutline
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.*
+import androidx.compose.runtime.remember
+
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import org.parowings.screens.community.Community
+import org.parowings.screens.rescue.Rescue
+import org.parowings.screens.animalReport.AnimalReport
+import org.parowings.theming.PrimaryGreen
+import org.parowings.theming.PrimaryOrange
+import org.parowings.theming.TextGray
+
+
+
 enum class BottomNavItem {
     HOME,
-    PETS,
+    RESCUE,
+    ADD,
+    COMMUNITY,
     PROFILE
 }
 
@@ -42,38 +78,74 @@ fun CustomBottomNavigation(
     selectedItem: BottomNavItem,
     onItemClick: (BottomNavItem) -> Unit
 ) {
+
     Surface(
-        modifier = Modifier
-            .padding(24.dp)
-            .fillMaxWidth()
-            .height(72.dp),
-        shape = RoundedCornerShape(36.dp),
-        color = Color(0xFFF8F8F8),
-        shadowElevation = 4.dp
+        modifier = Modifier.fillMaxWidth(),
+        shadowElevation = 8.dp,
+        color = Color.White
     ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp)
         ) {
 
-            BottomNavIcon(
-                icon = Icons.Default.GridView,
-                selected = selectedItem == BottomNavItem.HOME,
-                onClick = { onItemClick(BottomNavItem.HOME) }
-            )
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-            BottomNavIcon(
-                icon = Icons.Default.Pets,
-                selected = selectedItem == BottomNavItem.PETS,
-                onClick = { onItemClick(BottomNavItem.PETS) }
-            )
+                BottomNavIcon(
+                    Icons.Outlined.Home,
+                    "Home",
+                    selectedItem == BottomNavItem.HOME
+                ) {
+                    onItemClick(BottomNavItem.HOME)
+                }
 
-            BottomNavIcon(
-                icon = Icons.Rounded.Settings,
-                selected = selectedItem == BottomNavItem.PROFILE,
-                onClick = { onItemClick(BottomNavItem.PROFILE) }
-            )
+                BottomNavIcon(
+                    Icons.Outlined.LocationOn,
+                    "Rescue",
+                    selectedItem == BottomNavItem.RESCUE
+                ) {
+                    onItemClick(BottomNavItem.RESCUE)
+                }
+
+                Spacer(modifier = Modifier.width(56.dp))
+
+                BottomNavIcon(
+                    Icons.Outlined.PeopleOutline,
+                    "Community",
+                    selectedItem == BottomNavItem.COMMUNITY
+                ) {
+                    onItemClick(BottomNavItem.COMMUNITY)
+                }
+
+                BottomNavIcon(
+                    Icons.Outlined.AccountCircle,
+                    "Profile",
+                    selectedItem == BottomNavItem.PROFILE
+                ) {
+                    onItemClick(BottomNavItem.PROFILE)
+                }
+            }
+
+            FloatingActionButton(
+                onClick = { onItemClick(BottomNavItem.ADD) },
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .size(64.dp),
+                containerColor = PrimaryOrange,
+                contentColor = Color.White
+            ) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "Add",
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
     }
 }
@@ -81,36 +153,56 @@ fun CustomBottomNavigation(
 @Composable
 private fun BottomNavIcon(
     icon: ImageVector,
+    label: String,
     selected: Boolean,
     onClick: () -> Unit
 ) {
-    Box(
+
+    Column(
         modifier = Modifier
-            .size(48.dp)
-            .clip(CircleShape)
-            .background(
-                if (selected) DarkGray else Color.Transparent
-            )
-            .clickable { onClick() },
-        contentAlignment = Alignment.Center
+            .width(72.dp)
+            .fillMaxHeight()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = LocalIndication.current
+            ) {
+                onClick()
+            },
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
+
         Icon(
             imageVector = icon,
-            contentDescription = null,
-            tint = if (selected) Color.White else Color.LightGray
+            contentDescription = label,
+            tint = if (selected) PrimaryGreen else TextGray
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = label,
+            fontSize = 10.sp,
+            fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+            color = if (selected) PrimaryGreen else TextGray
         )
     }
 }
 
-fun shouldShowBottomBar(currentScreen: Screen): Boolean {
-    return currentScreen is Home || currentScreen is MyPets || currentScreen is Profile
+fun shouldShowBottomBar(screen: Screen): Boolean {
+    return screen is Home ||
+            screen is Rescue ||
+            screen is Community ||
+            screen is Profile
 }
 
 fun bottomNavItemFor(screen: Screen): BottomNavItem {
     return when (screen) {
         is Home -> BottomNavItem.HOME
-        is MyPets -> BottomNavItem.PETS
+        is Rescue -> BottomNavItem.RESCUE
+        is Community -> BottomNavItem.COMMUNITY
         is Profile -> BottomNavItem.PROFILE
+        is AnimalReport -> BottomNavItem.ADD
         else -> BottomNavItem.HOME
     }
 }
@@ -118,7 +210,9 @@ fun bottomNavItemFor(screen: Screen): BottomNavItem {
 fun bottomNavScreenFor(item: BottomNavItem): Screen {
     return when (item) {
         BottomNavItem.HOME -> Home
-        BottomNavItem.PETS -> MyPets
+        BottomNavItem.RESCUE -> Rescue
+        BottomNavItem.ADD -> AnimalReport
+        BottomNavItem.COMMUNITY -> Community
         BottomNavItem.PROFILE -> Profile
     }
 }

@@ -19,3 +19,12 @@ val AppYellow = Color(0xFFFFD600)
 val CardBackground = Color.White
 val TextColor = Color.Black
 val NotificationRed = Color(0xFFFF5722)
+val BackgroundGray = Color(0xFFF8F9FA)
+val PrimaryBlue = Color(0xFF007AFF)
+val TextDark = Color(0xFF1A1A1A)
+val TextGray = Color(0xFF8E8E93)
+val AvatarPink = Color(0xFFFFE4E9)
+// new
+val PrimaryGreen = Color(0xFF008A45)
+ val EmergencyRed = Color(0xFFFF5B5B)
+ val BackgroundLight = Color(0xFFF8FAF9)

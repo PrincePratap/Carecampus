@@ -10,7 +10,7 @@ internal interface AdoptionService {
         animalType: String? = null
     ): List<AdoptionResponse>
 
-    suspend fun getAdoptionById(id: String): AdoptionResponse
+    suspend fun getAdoptionById(id: String): AnimalResponseDetail
 
     suspend fun getMyAdoptions(ownerId: String): MyAdoptionsResponse
 }

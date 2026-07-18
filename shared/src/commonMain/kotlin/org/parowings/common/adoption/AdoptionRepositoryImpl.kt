@@ -42,7 +42,7 @@ internal class AdoptionRepositoryImpl(
         }
     }
 
-    override suspend fun getAdoptionById(id: String): Result<AdoptionResponse> {
+    override suspend fun getAdoptionById(id: String): Result<AnimalResponseDetail> {
         return withContext(dispatcher.io) {
             try {
                 Result.Success(adoptionService.getAdoptionById(id))

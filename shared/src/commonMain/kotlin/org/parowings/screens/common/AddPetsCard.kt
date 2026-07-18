@@ -1,5 +1,6 @@
 package org.parowings.screens.common
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,12 +21,14 @@ import org.parowings.screens.pet.myPets.PetCardContainer
 import org.parowings.theming.AppYellow
 
 @Composable
- fun AddPetsCard() {
+ fun AddPetsCard(
+     onClick: () -> Unit = {}
+ ) {
     PetCardContainer {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().clickable { onClick()}
         ) {
             Icon(
                 imageVector = Icons.Default.Add,

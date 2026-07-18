@@ -1,24 +1,16 @@
-package org.parowings.screens.pet.addPet
+package org.parowings.screens.notifications
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import org.parowings.screens.adoption.petAdoption.PetAdoption
-import org.parowings.screens.home.HomeScreen
 
-
-
-
-object AddPet : Screen {
+object Notifications : Screen {
     @Composable
     override fun Content() {
-
         val navigator = LocalNavigator.currentOrThrow
-
-        AddPetScreen(
-
+        NotificationsScreen(
+            onBackClick = { navigator.pop() }
         )
     }
-
 }

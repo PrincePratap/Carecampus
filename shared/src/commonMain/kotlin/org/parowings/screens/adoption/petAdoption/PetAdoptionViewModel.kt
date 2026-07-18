@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.parowings.common.adoption.AdoptionRepository
 import org.parowings.common.adoption.AdoptionResponse
+import org.parowings.common.adoption.AnimalResponseDetail
 import org.parowings.common.adoption.MyAdoptionResponse
 import org.parowings.common.data.remote.Result
 
@@ -105,7 +106,7 @@ data class AdoptionListUiState(
 
 data class AdoptionDetailUiState(
     val isLoading: Boolean = false,
-    val selectedAdoption: AdoptionResponse? = null,
+    val selectedAdoption: AnimalResponseDetail? = null,
     val error: String? = null
 )
 

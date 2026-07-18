@@ -1,193 +1,112 @@
 package org.parowings.screens.home
 
-
-
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.outlined.Pets
-import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import org.koin.core.qualifier.named
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.parowings.screens.common.CustomBottomNavigation
-import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
-import org.parowings.screens.common.HomeCard
-import org.parowings.theming.CardBlue
-import org.parowings.theming.CardGreen
-import org.parowings.theming.CardIndigo
-import org.parowings.theming.CardOrange
-import org.parowings.theming.CardPink
-import org.parowings.theming.CardPurple
-import org.parowings.theming.DarkGray
+import org.parowings.screens.common.HomeItems.AnimalCategoriesSection
+import org.parowings.screens.common.HomeItems.EmergencySOSBanner
+import org.parowings.screens.common.HomeItems.HeaderSection
+import org.parowings.screens.common.HomeItems.LatestRescueCasesSection
+import org.parowings.screens.common.HomeItems.QuickActionsSection
+import org.parowings.screens.common.HomeItems.SearchBar
+import org.parowings.theming.BackgroundLight
+import org.parowings.theming.EmergencyRed
+import org.parowings.theming.PrimaryGreen
+import org.parowings.theming.PrimaryOrange
+import org.parowings.theming.TextDark
+import org.parowings.theming.TextGray
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 
-
-data class TrainingItem(
-    val title: String,
-    val color: Color,
-    val onClick: () -> Unit
-)
-
-
-@Preview(showBackground = true)
 @Composable
-fun HomeScreen(
-    clickOnAnimalRescue: () -> Unit = {},
-    clickOnAdoption: () -> Unit = {},
-    clickOnNGOs: () -> Unit = {},
-    clickOnTraining: () -> Unit = {},
-    clickOnVeterinary: () -> Unit = {},
-    clickOnLostFound: () -> Unit = {},
-    clickOnDonate: () -> Unit = {},
-    clickOnVolunteers: () -> Unit = {}
-
-) {
-    val homeItems = listOf(
-        TrainingItem(
-            title = "Animal Rescue",
-            color = CardBlue,
-            onClick = {
-                // navigator.push(AnimalRescueScreen())
-                println("Animal Rescue")
-            }
-        ),
-        TrainingItem(
-            title = "Adoption",
-            color = CardPink,
-            onClick = {
-                clickOnAdoption()
-                println("Adoption")
-            }
-        ),
-        TrainingItem(
-            title = "NGOs",
-            color = CardPurple,
-            onClick = {
-                println("NGOs")
-            }
-        ),
-        TrainingItem(
-            title = "Training",
-            color = CardGreen,
-            onClick = {
-                clickOnTraining()
-                println("Training")
-            }
-        ),
-        TrainingItem(
-            title = "Veterinary",
-            color = CardOrange,
-            onClick = {
-                println("Veterinary")
-            }
-        ),
-        TrainingItem(
-            title = "Lost & Found",
-            color = CardIndigo,
-            onClick = {
-                println("Lost & Found")
-            }
-        ),
-        TrainingItem(
-            title = "Donate",
-            color = CardBlue,
-            onClick = {
-                println("Donate")
-            }
-        ),
-        TrainingItem(
-            title = "Volunteers",
-            color = CardPink,
-            onClick = {
-                println("Volunteers")
-            }
-        )
-    )
+fun HomeScreen() {
+    var selectedCategory by remember { mutableStateOf("Dogs") }
 
     Scaffold(
-    ) { paddingValues ->
+        containerColor = BackgroundLight,
+        bottomBar = {}
+    ) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.White)
-                .padding(paddingValues)
-                .padding(horizontal = 24.dp)
+                .padding(padding)
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp)
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Header: Paw Icon and User Profile
-            HeaderSection()
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            // Text Labels
-            Text(
-                text = "Let's train your pet!",
-                fontSize = 14.sp,
-                color = Color.Gray
-            )
-            Text(
-                text = "Beginners Training",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = DarkGray
-            )
-
             Spacer(modifier = Modifier.height(24.dp))
-
-            // Grid of Training Cards
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(homeItems) { item ->
-                    HomeCard(item)
+            HeaderSection()
+            Spacer(modifier = Modifier.height(24.dp))
+            SearchBar()
+            Spacer(modifier = Modifier.height(24.dp))
+            EmergencySOSBanner()
+            Spacer(modifier = Modifier.height(32.dp))
+            QuickActionsSection(
+                onReportClick = {
+                },
+                onAdoptClick = {
+                },
+                onDonateClick = {
+                },
+                onMoreClick = {
                 }
-            }
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            AnimalCategoriesSection(
+                selectedCategory = selectedCategory,
+                onCategoryClick = { category ->
+                    selectedCategory = category
+
+                    when (category) {
+                        "Dogs" -> {}
+                        "Cats" -> {}
+                        "Birds" -> {}
+                        "Others" -> {}
+                    }
+                }
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            LatestRescueCasesSection()
+            Spacer(modifier = Modifier.height(100.dp)) // Extra space for bottom bar
         }
     }
 }
 
-@Composable
-fun HeaderSection() {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        // Left Paw Icon
-        Surface(
-            modifier = Modifier.size(48.dp),
-            shape = CircleShape,
-            color = Color(0xFFF5F5F5)
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Icon(Icons.Default.Pets, contentDescription = null, tint = DarkGray)
-            }
-        }
 
-    }
-}
+
+
+
+
+
+
+
+
+
 
 
 

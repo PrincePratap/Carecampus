@@ -21,43 +21,5 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.parowings.screens.home.TrainingItem
 import org.parowings.theming.DarkGray
 
-@Composable
-fun HomeCard(item: TrainingItem) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(180.dp)
-            .clickable {
-                item.onClick()
-            },
-
-        shape = RoundedCornerShape(24.dp),
-        colors = CardDefaults.cardColors(containerColor = item.color)
-    ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            // Placeholder for the Dog Illustration
-            Icon(
-                imageVector = Icons.Default.Pets,
-                contentDescription = null,
-                modifier = Modifier.size(80.dp),
-                tint = DarkGray.copy(alpha = 0.2f)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = item.title,
-                fontWeight = FontWeight.Medium,
-                fontSize = 14.sp,
-                color = DarkGray
-            )
-        }
-    }
-}

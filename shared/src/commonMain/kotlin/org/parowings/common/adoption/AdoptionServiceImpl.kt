@@ -39,8 +39,8 @@ internal class AdoptionServiceImpl(private val client: HttpClient) : AdoptionSer
         return response.data
     }
 
-    override suspend fun getAdoptionById(id: String): AdoptionResponse {
-        return client.get("/adoptions/$id").body()
+    override suspend fun getAdoptionById(id: String): AnimalResponseDetail {
+        return client.post("/adoptions/$id").body()
     }
 
     override suspend fun getMyAdoptions(ownerId: String): MyAdoptionsResponse {

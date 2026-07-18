@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.parowings.common.adoption.AdoptionResponse
+import org.parowings.common.adoption.AnimalResponseDetail
 import org.parowings.theming.DarkButton
 
 private val DetailBackground = Color(0xFFF4F7FB)
@@ -47,7 +48,7 @@ private val DetailMutedText = Color(0xFF64748B)
 @Composable
 @Preview(showBackground = true)
 fun PetDetailScreen(
-    adoption: AdoptionResponse? = null,
+    adoption: AnimalResponseDetail? = null,
     isLoading: Boolean = false,
     error: String? = null,
     onBack: () -> Unit = {}

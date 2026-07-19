@@ -33,9 +33,9 @@ import org.parowings.theming.BackgroundLight
 import org.parowings.theming.TextDark
 import org.parowings.theming.TextGray
 
-class AnimalReportScreen : Screen {
-    @Composable
-    override fun Content() {
+@Composable
+fun AnimalReportScreen ()
+ {
         val navigator = LocalNavigator.currentOrThrow
         var selectedAnimal by remember { mutableStateOf("Dog") }
 
@@ -253,7 +253,7 @@ class AnimalReportScreen : Screen {
             }
         }
     }
-}
+
 
 data class AnimalType(val name: String, val icon: String)
 

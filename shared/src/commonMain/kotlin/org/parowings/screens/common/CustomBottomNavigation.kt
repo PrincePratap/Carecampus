@@ -26,10 +26,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import org.parowings.theming.DarkGray
 import cafe.adriel.voyager.core.screen.Screen
 import org.parowings.screens.home.Home
-import org.parowings.screens.pet.myPets.MyPets
 import org.parowings.screens.userProfile.Profile
 
 

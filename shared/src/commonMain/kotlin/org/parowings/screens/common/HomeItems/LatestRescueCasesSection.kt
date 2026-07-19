@@ -66,7 +66,16 @@ private fun RescueCaseCard(title: String, location: String, status: String, topC
             }
             Column(modifier = Modifier.padding(12.dp)) {
                 Text(text = title, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = TextDark)
-                Text(text = location, fontSize = 10.sp, color = TextGray)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Outlined.LocationOn,
+                        contentDescription = null,
+                        tint = TextGray,
+                        modifier = Modifier.size(10.dp)
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Text(text = location, fontSize = 10.sp, color = TextGray)
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 Surface(
                     shape = RoundedCornerShape(8.dp),

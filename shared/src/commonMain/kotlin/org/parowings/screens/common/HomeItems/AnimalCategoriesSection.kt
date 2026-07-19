@@ -45,7 +45,7 @@ fun AnimalCategoriesSection(
         AnimalCategory("Dogs", Icons.Outlined.Pets),
         AnimalCategory("Cats", Icons.Outlined.Pets),
         AnimalCategory("Birds", Icons.Outlined.Flight),
-        AnimalCategory("Others", Icons.Outlined.Pets)
+        AnimalCategory("Cows", Icons.Outlined.Pets)
     )
 
     Column {

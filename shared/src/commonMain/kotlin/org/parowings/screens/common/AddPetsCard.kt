@@ -17,31 +17,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.parowings.screens.pet.myPets.PetCardContainer
 import org.parowings.theming.AppYellow
 
 @Composable
  fun AddPetsCard(
      onClick: () -> Unit = {}
  ) {
-    PetCardContainer {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize().clickable { onClick()}
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
-                tint = AppYellow,
-                modifier = Modifier.size(48.dp)
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Add Pets",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp
-            )
-        }
-    }
+//    PetCardContainer {
+//        Column(
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center,
+//            modifier = Modifier.fillMaxSize().clickable { onClick()}
+//        ) {
+//            Icon(
+//                imageVector = Icons.Default.Add,
+//                contentDescription = null,
+//                tint = AppYellow,
+//                modifier = Modifier.size(48.dp)
+//            )
+//            Spacer(modifier = Modifier.height(8.dp))
+//            Text(
+//                text = "Add Pets",
+//                fontWeight = FontWeight.Bold,
+//                fontSize = 16.sp
+//            )
+//        }
+//    }
 }

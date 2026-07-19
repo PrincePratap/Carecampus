@@ -26,23 +26,23 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import org.parowings.screens.common.HomeItems.AnimalCategoriesSection
+import org.parowings.screens.common.HomeItems.AskParoAIBanner
 import org.parowings.screens.common.HomeItems.EmergencySOSBanner
 import org.parowings.screens.common.HomeItems.HeaderSection
 import org.parowings.screens.common.HomeItems.LatestRescueCasesSection
 import org.parowings.screens.common.HomeItems.QuickActionsSection
 import org.parowings.screens.common.HomeItems.SearchBar
+import org.parowings.screens.common.HomeItems.SuccessStoriesSection
+import org.parowings.screens.common.HomeItems.UpcomingRemindersSection
 import org.parowings.theming.BackgroundLight
-import org.parowings.theming.EmergencyRed
 import org.parowings.theming.PrimaryGreen
-import org.parowings.theming.PrimaryOrange
 import org.parowings.theming.TextDark
 import org.parowings.theming.TextGray
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-
 
 @Composable
 fun HomeScreen() {
@@ -61,37 +61,36 @@ fun HomeScreen() {
         ) {
             Spacer(modifier = Modifier.height(24.dp))
             HeaderSection()
+            
             Spacer(modifier = Modifier.height(24.dp))
             SearchBar()
+            
             Spacer(modifier = Modifier.height(24.dp))
             EmergencySOSBanner()
+            
             Spacer(modifier = Modifier.height(32.dp))
-            QuickActionsSection(
-                onReportClick = {
-                },
-                onAdoptClick = {
-                },
-                onDonateClick = {
-                },
-                onMoreClick = {
-                }
-            )
+            QuickActionsSection()
+            
+            Spacer(modifier = Modifier.height(32.dp))
+            AskParoAIBanner()
+            
+            Spacer(modifier = Modifier.height(32.dp))
+            UpcomingRemindersSection()
+            
             Spacer(modifier = Modifier.height(32.dp))
             AnimalCategoriesSection(
                 selectedCategory = selectedCategory,
                 onCategoryClick = { category ->
                     selectedCategory = category
-
-                    when (category) {
-                        "Dogs" -> {}
-                        "Cats" -> {}
-                        "Birds" -> {}
-                        "Others" -> {}
-                    }
                 }
             )
+            
             Spacer(modifier = Modifier.height(32.dp))
             LatestRescueCasesSection()
+            
+            Spacer(modifier = Modifier.height(32.dp))
+            SuccessStoriesSection()
+
             Spacer(modifier = Modifier.height(100.dp)) // Extra space for bottom bar
         }
     }

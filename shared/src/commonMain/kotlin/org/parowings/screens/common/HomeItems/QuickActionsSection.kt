@@ -35,6 +35,10 @@ fun QuickActionsSection(
     onReportClick: () -> Unit = {},
     onAdoptClick: () -> Unit = {},
     onDonateClick: () -> Unit = {},
+    onMyPetsClick: () -> Unit = {},
+    onAiToolsClick: () -> Unit = {},
+    onLostFoundClick: () -> Unit = {},
+    onNearbyVetsClick: () -> Unit = {},
     onMoreClick: () -> Unit = {}
 ) {
     Column {
@@ -47,37 +51,72 @@ fun QuickActionsSection(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            QuickActionItem(
-                icon = Icons.Outlined.PhotoCamera,
-                label = "Report",
-                bgColor = Color(0xFFE8F5E9),
-                onClick = onReportClick
-            )
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                QuickActionItem(
+                    icon = Icons.Outlined.PhotoCamera,
+                    label = "Report",
+                    bgColor = Color(0xFFE8F5E9),
+                    onClick = onReportClick
+                )
 
-            QuickActionItem(
-                icon = Icons.Outlined.FavoriteBorder,
-                label = "Adopt",
-                bgColor = Color(0xFFFFF3E0),
-                onClick = onAdoptClick
-            )
+                QuickActionItem(
+                    icon = Icons.Outlined.FavoriteBorder,
+                    label = "Adopt",
+                    bgColor = Color(0xFFFFF3E0),
+                    onClick = onAdoptClick
+                )
 
-            QuickActionItem(
-                icon = Icons.Outlined.VolunteerActivism,
-                label = "Donate",
-                bgColor = Color(0xFFFFEBEE),
-                onClick = onDonateClick
-            )
+                QuickActionItem(
+                    icon = Icons.Outlined.VolunteerActivism,
+                    label = "Donate",
+                    bgColor = Color(0xFFFFEBEE),
+                    onClick = onDonateClick
+                )
 
-            QuickActionItem(
-                icon = Icons.Outlined.GridView,
-                label = "More",
-                bgColor = Color(0xFFE8F5E9),
-                onClick = onMoreClick
-            )
+                QuickActionItem(
+                    icon = Icons.Outlined.Pets,
+                    label = "My pets",
+                    bgColor = Color(0xFFE8F5E9),
+                    onClick = onMyPetsClick
+                )
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                QuickActionItem(
+                    icon = Icons.Outlined.AutoAwesome,
+                    label = "AI tools",
+                    bgColor = Color(0xFFFFF3E0),
+                    onClick = onAiToolsClick
+                )
+
+                QuickActionItem(
+                    icon = Icons.Outlined.ContentPasteSearch,
+                    label = "Lost & found",
+                    bgColor = Color(0xFFFFEBEE),
+                    onClick = onLostFoundClick
+                )
+
+                QuickActionItem(
+                    icon = Icons.Outlined.HealthAndSafety,
+                    label = "Nearby vets",
+                    bgColor = Color(0xFFE8F5E9),
+                    onClick = onNearbyVetsClick
+                )
+
+                QuickActionItem(
+                    icon = Icons.Outlined.GridView,
+                    label = "More",
+                    bgColor = Color(0xFFFFF3E0),
+                    onClick = onMoreClick
+                )
+            }
         }
     }
 }
@@ -91,7 +130,9 @@ fun QuickActionItem(
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.clickable { onClick() }
+        modifier = Modifier
+            .width(72.dp)
+            .clickable { onClick() }
     ) {
         Surface(
             modifier = Modifier.size(60.dp),
@@ -102,7 +143,9 @@ fun QuickActionItem(
                 Icon(
                     imageVector = icon,
                     contentDescription = label,
-                    tint = PrimaryGreen,
+                    tint = if (bgColor == Color(0xFFE8F5E9)) PrimaryGreen 
+                           else if (bgColor == Color(0xFFFFF3E0)) PrimaryOrange
+                           else Color(0xFFFF5B5B),
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -113,7 +156,8 @@ fun QuickActionItem(
         Text(
             text = label,
             fontSize = 12.sp,
-            color = TextGray
+            color = TextDark,
+            fontWeight = FontWeight.Medium
         )
     }
 }

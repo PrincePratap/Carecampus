@@ -19,8 +19,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.parowings.screens.authentication.getStarted.BrandPurple
-import org.parowings.screens.authentication.getStarted.BrandYellow
+
 
 // Custom Colors from the image
 
@@ -32,7 +31,7 @@ fun SignUpScreen() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(BrandPurple)
+//            .background(BrandPurple)
     ) {
         // --- Header Section ---
         Column(
@@ -50,7 +49,7 @@ fun SignUpScreen() {
             ) {
                 Surface(
                     modifier = Modifier.size(36.dp),
-                    color = BrandYellow,
+//                    color = BrandYellow,
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     IconButton(onClick = { /* Handle back */ }) {
@@ -113,7 +112,7 @@ fun SignUpScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = BrandYellow),
+//                    colors = ButtonDefaults.buttonColors(containerColor = BrandYellow),
                     shape = RoundedCornerShape(16.dp)
                 ) {
                     Text(
@@ -148,9 +147,9 @@ fun SignUpScreen() {
                 // Footer Text
                 val footerText = buildAnnotatedString {
                     append("Already have an account? ")
-                    withStyle(style = SpanStyle(color = BrandYellow, fontWeight = FontWeight.Bold)) {
-                        append("Log In")
-                    }
+//                    withStyle(style = SpanStyle(color = BrandYellow, fontWeight = FontWeight.Bold)) {
+//                        append("Log In")
+//                    }
                 }
                 Text(text = footerText, fontSize = 14.sp, color = Color.Gray)
             }

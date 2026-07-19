@@ -6,7 +6,6 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.parowings.screens.common.AnimalTrainingItem
-import org.parowings.screens.pet.addPet.AddPetScreen
 import parowings.shared.generated.resources.Res
 import parowings.shared.generated.resources.cat
 import parowings.shared.generated.resources.dog
@@ -29,12 +28,7 @@ object Animals : Screen {
                 color = Color.Transparent,
                 onClick = { }
             ),
-//            AnimalTrainingItem(
-//                title = "Bird",
-//                image = Res.drawable.bird,
-//                color = Color.Transparent,
-//                onClick = { }
-//            )
+
         )
 
         val navigator = LocalNavigator.currentOrThrow

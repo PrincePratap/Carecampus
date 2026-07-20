@@ -45,7 +45,17 @@ import org.parowings.theming.TextDark
 import org.parowings.theming.TextGray
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onReportClick: () -> Unit = {},
+    onAdoptClick: () -> Unit = {},
+    onDonateClick: () -> Unit = {},
+    onMyPetsClick: () -> Unit = {},
+    onAiToolsClick: () -> Unit = {},
+    onLostFoundClick: () -> Unit = {},
+    onNearbyVetsClick: () -> Unit = {},
+    onMoreClick: () -> Unit = {},
+    onBannerClick: () -> Unit = {}
+) {
     var selectedCategory by remember { mutableStateOf("Dogs") }
 
     Scaffold(
@@ -69,10 +79,21 @@ fun HomeScreen() {
             EmergencySOSBanner()
             
             Spacer(modifier = Modifier.height(32.dp))
-            QuickActionsSection()
+            QuickActionsSection(
+                onReportClick = { onReportClick() },
+                onAdoptClick = { onAdoptClick() },
+                onDonateClick = { onDonateClick() },
+                onMyPetsClick = { onMyPetsClick() },
+                onAiToolsClick = { onAiToolsClick() },
+                onLostFoundClick = { onLostFoundClick() },
+                onNearbyVetsClick = { onNearbyVetsClick() },
+                onMoreClick = { onMoreClick() }
+            )
             
             Spacer(modifier = Modifier.height(32.dp))
-            AskParoAIBanner()
+            AskParoAIBanner(
+                onBannerClick = { onBannerClick() }
+            )
             
             Spacer(modifier = Modifier.height(32.dp))
             UpcomingRemindersSection()

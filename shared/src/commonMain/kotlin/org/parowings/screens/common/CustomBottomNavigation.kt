@@ -1,7 +1,6 @@
 package org.parowings.screens.common
 
 import androidx.compose.foundation.LocalIndication
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,26 +8,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.GridView
-import androidx.compose.material.icons.filled.Pets
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import org.parowings.screens.home.Home
-import org.parowings.screens.userProfile.Profile
+import org.parowings.screens.userProfile.profile.Profile
 
 
 
@@ -38,8 +30,6 @@ import org.parowings.screens.userProfile.Profile
 
 //// new code
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 
@@ -53,10 +43,9 @@ import androidx.compose.runtime.remember
 
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import org.parowings.screens.community.Community
 import org.parowings.screens.rescue.Rescue
-import org.parowings.screens.animalReport.AnimalReport
+import org.parowings.screens.report.animalReport.AnimalReport
 import org.parowings.theming.PrimaryGreen
 import org.parowings.theming.PrimaryOrange
 import org.parowings.theming.TextGray

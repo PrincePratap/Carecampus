@@ -11,24 +11,40 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import org.parowings.theming.*
+import org.parowings.screens.common.ProfileItems.EditField
+
+object EditProfile : Screen {
+    @Composable
+    override fun Content() {
+        val navigator = LocalNavigator.currentOrThrow
+        EditProfileScreen(onBackClick = { navigator.pop() })
+    }
+}
 
 @Composable
 fun EditProfileScreen(
     onBackClick: () -> Unit = {},
     onSaveChanges: () -> Unit = {}
 ) {
-    var fullName by remember { mutableStateOf("Prince Rathi") }
-    var email by remember { mutableStateOf("prince.rathi@email.com") }
-    var phone by remember { mutableStateOf("+91 98765 43210") }
-    var bio by remember { mutableStateOf("Animal lover based in Delhi. Always ready to help a stray in need.") }
+    var fullName by rememberSaveable { mutableStateOf("Prince Rathi") }
+    var email by rememberSaveable { mutableStateOf("prince.rathi@email.com") }
+    var phone by rememberSaveable { mutableStateOf("+91 98765 43210") }
+    var address by rememberSaveable { mutableStateOf("123 Rescue Way") }
+    var city by rememberSaveable { mutableStateOf("New Delhi") }
+    var state by rememberSaveable { mutableStateOf("Delhi") }
+    var postalCode by rememberSaveable { mutableStateOf("110001") }
+    var aboutMe by rememberSaveable { mutableStateOf("Animal lover based in Delhi. Always ready to help a stray in need.") }
 
     Scaffold(
         containerColor = BackgroundLight,
@@ -40,7 +56,7 @@ fun EditProfileScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -50,7 +66,7 @@ fun EditProfileScreen(
             Box(contentAlignment = Alignment.BottomEnd) {
                 Surface(
                     modifier = Modifier.size(100.dp),
-                    shape = RoundedCornerShape(30.dp),
+                    shape = RoundedCornerShape(24.dp),
                     color = PrimaryGreen
                 ) {
                     Box(contentAlignment = Alignment.Center) {
@@ -63,7 +79,7 @@ fun EditProfileScreen(
                     }
                 }
                 Surface(
-                    modifier = Modifier.size(32.dp),
+                    modifier = Modifier.size(32.dp).offset(x = 4.dp, y = 4.dp),
                     shape = CircleShape,
                     color = Color.White,
                     shadowElevation = 2.dp
@@ -72,85 +88,128 @@ fun EditProfileScreen(
                         Icon(
                             imageVector = Icons.Outlined.PhotoCamera,
                             contentDescription = "Change photo",
-                            tint = TextDark,
-                            modifier = Modifier.size(16.dp)
+                            tint = TextGray,
+                            modifier = Modifier.size(18.dp)
                         )
                     }
                 }
             }
             
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             
-            TextButton(onClick = { /* Change photo */ }) {
-                Text(
-                    text = "Change photo",
-                    color = PrimaryGreen,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
-                )
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
+            Text(
+                text = "Change photo",
+                color = PrimaryGreen,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 24.dp)
+            )
 
             // Form Fields
-            ProfileEditField(
-                label = "Full name",
+            EditField(
+                placeholder = "Full Name",
                 value = fullName,
                 onValueChange = { fullName = it },
                 leadingIcon = Icons.Outlined.Person
             )
             
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             
-            ProfileEditField(
-                label = "Email",
+            EditField(
+                placeholder = "Email",
                 value = email,
                 onValueChange = { email = it },
                 leadingIcon = Icons.Outlined.Email
             )
             
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             
-            ProfileEditField(
-                label = "Phone",
+            EditField(
+                placeholder = "Phone Number",
                 value = phone,
                 onValueChange = { phone = it },
                 leadingIcon = Icons.Outlined.Phone
             )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            EditField(
+                placeholder = "Address",
+                value = address,
+                onValueChange = { address = it },
+                leadingIcon = Icons.Outlined.LocationOn
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            EditField(
+                placeholder = "City",
+                value = city,
+                onValueChange = { city = it },
+                leadingIcon = Icons.Outlined.LocationCity
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            EditField(
+                placeholder = "State",
+                value = state,
+                onValueChange = { state = it },
+                leadingIcon = Icons.Outlined.Public
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            EditField(
+                placeholder = "Postal Code",
+                value = postalCode,
+                onValueChange = { postalCode = it },
+                leadingIcon = Icons.Outlined.PinDrop
+            )
             
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             
-            ProfileEditField(
-                label = "Bio",
-                value = bio,
-                onValueChange = { bio = it },
+            EditField(
+                placeholder = "About Me",
+                value = aboutMe,
+                onValueChange = { aboutMe = it },
                 leadingIcon = Icons.Outlined.Description,
                 isMultiline = true
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            Button(
-                onClick = onSaveChanges,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen),
-                shape = RoundedCornerShape(28.dp)
+            // Buttons
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                OutlinedButton(
+                    onClick = onBackClick,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, PrimaryGreen),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = PrimaryGreen)
                 ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Check,
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp),
-                        tint = Color.White
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Save changes",
+                        text = "Cancel",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+
+                Button(
+                    onClick = onSaveChanges,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(56.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen),
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Text(
+                        text = "Save Changes",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -159,6 +218,7 @@ fun EditProfileScreen(
             }
             
             Spacer(modifier = Modifier.height(32.dp))
+            WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
         }
     }
 }
@@ -168,15 +228,16 @@ fun EditProfileTopBar(onBackClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-        contentAlignment = Alignment.CenterStart
+            .padding(top = 16.dp, start = 24.dp, end = 24.dp)
+            .height(56.dp),
+        contentAlignment = Alignment.Center
     ) {
         Surface(
             onClick = onBackClick,
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(16.dp),
             color = Color.White,
-            modifier = Modifier.size(44.dp),
-            shadowElevation = 2.dp
+            modifier = Modifier.size(48.dp).align(Alignment.CenterStart),
+            shadowElevation = 1.dp
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Icon(
@@ -187,63 +248,12 @@ fun EditProfileTopBar(onBackClick: () -> Unit) {
                 )
             }
         }
+
         Text(
             text = "Edit profile",
             fontSize = 20.sp,
             fontWeight = FontWeight.ExtraBold,
-            color = TextDark,
-            modifier = Modifier.align(Alignment.Center)
+            color = TextDark
         )
-    }
-}
-
-@Composable
-fun ProfileEditField(
-    label: String,
-    value: String,
-    onValueChange: (String) -> Unit,
-    leadingIcon: ImageVector,
-    isMultiline: Boolean = false
-) {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = label,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            color = TextGray,
-            modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
-        )
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .then(if (isMultiline) Modifier.height(100.dp) else Modifier.height(56.dp)),
-            shape = RoundedCornerShape(16.dp),
-            color = Color.White,
-            shadowElevation = 1.dp
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 16.dp, vertical = if (isMultiline) 12.dp else 0.dp),
-                verticalAlignment = if (isMultiline) Alignment.Top else Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = leadingIcon,
-                    contentDescription = null,
-                    tint = TextGray,
-                    modifier = Modifier.size(20.dp)
-                )
-                Spacer(modifier = Modifier.width(12.dp))
-                androidx.compose.foundation.text.BasicTextField(
-                    value = value,
-                    onValueChange = onValueChange,
-                    textStyle = androidx.compose.ui.text.TextStyle(
-                        color = TextDark,
-                        fontSize = 15.sp
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
     }
 }

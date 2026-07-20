@@ -1,18 +1,16 @@
-package org.parowings.screens.services
+package org.parowings.screens.userProfile.achievements
 
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import org.parowings.screens.donation.DonationScreen
 
-
-
-object Services : Screen {
+object Achievements : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
-        ServicesScreen(
+        AchievementsScreen(
+            onBackClick = { navigator.pop() }
         )
     }
 }

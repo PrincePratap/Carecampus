@@ -1,7 +1,6 @@
 package org.parowings.screens.donation
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -24,12 +23,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.parowings.theming.BackgroundGray
+import org.parowings.theming.CardBgLight
+import org.parowings.theming.GreenPrimary
 import org.parowings.theming.PrimaryOrange
 import org.parowings.theming.TextDark
 import org.parowings.theming.TextGray
 
-private val GreenPrimary = Color(0xFF008A45)
-private val CardBgLight = Color(0xFFE8F5E9).copy(alpha = 0.5f)
+
 
 @Composable
 fun DonationScreen(

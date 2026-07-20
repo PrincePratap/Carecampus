@@ -32,10 +32,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.parowings.theming.CardBackground
 import org.parowings.theming.TextDark
 import org.parowings.theming.TextGray
 import androidx.compose.foundation.clickable
+import org.parowings.theming.BackgroundLight
 
 
 @Composable
@@ -51,7 +51,7 @@ fun MenuSection(
     onTermsClick: () -> Unit = {}
 ) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = CardBackground),
+        colors = CardDefaults.cardColors(containerColor = BackgroundLight),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = Modifier.fillMaxWidth()

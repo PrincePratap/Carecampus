@@ -1,6 +1,7 @@
 package org.parowings.screens.common.HomeItems
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,9 +29,12 @@ import androidx.compose.ui.unit.sp
 import org.parowings.theming.PrimaryGreen
 
 @Composable
-fun AskParoAIBanner() {
+fun AskParoAIBanner(
+    onBannerClick: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
+            .clickable(onClick = { onBannerClick() })
             .fillMaxWidth()
             .height(110.dp)
             .background(

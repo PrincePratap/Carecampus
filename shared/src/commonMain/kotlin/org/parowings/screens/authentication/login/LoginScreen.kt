@@ -10,19 +10,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import org.parowings.theming.BackgroundGray
-import org.parowings.theming.TextDark
-import org.parowings.theming.TextGray
-
-private val PrimaryGreen = Color(0xFF008A45)
+import org.parowings.theming.*
+import org.parowings.screens.common.ProfileItems.EditField
 
 @Composable
 fun LoginScreen(
@@ -32,8 +31,12 @@ fun LoginScreen(
     onGoogleLoginClick: () -> Unit = {},
     onGuestLoginClick: () -> Unit = {}
 ) {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email by rememberSaveable { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    var emailError by rememberSaveable { mutableStateOf<String?>(null) }
+    var passwordError by rememberSaveable { mutableStateOf<String?>(null) }
+
+    val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[a-z]+\$".toRegex()
 
     Scaffold(
         containerColor = BackgroundGray
@@ -42,7 +45,7 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 24.dp)
+                .padding(horizontal = 16.dp)
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -56,7 +59,7 @@ fun LoginScreen(
             ) {
                 Box(contentAlignment = Alignment.Center) {
                     Icon(
-                        imageVector = Icons.Outlined.Pets, // Placeholder for the bird icon
+                        imageVector = Icons.Outlined.Pets,
                         contentDescription = "Logo",
                         tint = Color.White,
                         modifier = Modifier.size(32.dp)
@@ -84,20 +87,51 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             // Input Fields
-            LoginInputField(
-                value = email,
-                onValueChange = { email = it },
-                label = "Email address",
-                icon = Icons.Outlined.Email
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            LoginInputField(
-                value = password,
-                onValueChange = { password = it },
-                label = "Password",
-                icon = Icons.Outlined.Lock,
-                trailingIcon = Icons.Outlined.Visibility
-            )
+            Column {
+                EditField(
+                    placeholder = "Email address",
+                    value = email,
+                    onValueChange = { 
+                        email = it
+                        emailError = null 
+                    },
+                    leadingIcon = Icons.Outlined.Email,
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                )
+                if (emailError != null) {
+                    Text(
+                        text = emailError!!,
+                        color = ErrorRed,
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Column {
+                EditField(
+                    placeholder = "Password",
+                    value = password,
+                    onValueChange = { 
+                        password = it
+                        passwordError = null
+                    },
+                    leadingIcon = Icons.Outlined.Lock,
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                )
+                if (passwordError != null) {
+                    Text(
+                        text = passwordError!!,
+                        color = ErrorRed,
+                        fontSize = 12.sp,
+                        modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -127,7 +161,20 @@ fun LoginScreen(
 
             // Log in Button
             Button(
-                onClick = onLoginClick,
+                onClick = {
+                    emailError = null
+                    passwordError = null
+                    
+                    if (email.isEmpty()) emailError = "Email cannot be empty"
+                    else if (!email.matches(emailRegex)) emailError = "Invalid email format"
+                    
+                    if (password.isEmpty()) passwordError = "Password cannot be empty"
+                    else if (password.length < 8) passwordError = "Minimum 8 characters required"
+
+                    if (emailError == null && passwordError == null) {
+                        onLoginClick()
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
@@ -149,14 +196,14 @@ fun LoginScreen(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                HorizontalDivider(modifier = Modifier.weight(1f), color = Color.LightGray.copy(alpha = 0.5f))
+                HorizontalDivider(modifier = Modifier.weight(1f), color = DividerColor)
                 Text(
                     text = "or continue with",
                     modifier = Modifier.padding(horizontal = 12.dp),
                     fontSize = 14.sp,
                     color = TextGray
                 )
-                HorizontalDivider(modifier = Modifier.weight(1f), color = Color.LightGray.copy(alpha = 0.5f))
+                HorizontalDivider(modifier = Modifier.weight(1f), color = DividerColor)
             }
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -164,7 +211,7 @@ fun LoginScreen(
             // Social Buttons
             SocialLoginButton(
                 text = "Continue with Google",
-                icon = Icons.Outlined.AccountCircle, // Placeholder for Google logo
+                icon = Icons.Outlined.AccountCircle,
                 onClick = onGoogleLoginClick
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -192,54 +239,6 @@ fun LoginScreen(
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-        }
-    }
-}
-
-@Composable
-fun LoginInputField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    icon: ImageVector,
-    trailingIcon: ImageVector? = null
-) {
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(60.dp),
-        shape = RoundedCornerShape(16.dp),
-        color = Color.White,
-        shadowElevation = 1.dp
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = TextGray,
-                modifier = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(12.dp))
-            Box(modifier = Modifier.weight(1f)) {
-                if (value.isEmpty()) {
-                    Text(text = label, color = TextGray, fontSize = 15.sp)
-                }
-                // In a real app, use BasicTextField here for actual input
-                Text(text = value, color = TextDark, fontSize = 15.sp)
-            }
-            if (trailingIcon != null) {
-                Icon(
-                    imageVector = trailingIcon,
-                    contentDescription = null,
-                    tint = TextGray,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
         }
     }
 }

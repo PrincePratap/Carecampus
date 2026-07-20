@@ -10,6 +10,7 @@ import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 import org.parowings.common.data.local.UserSettingsRepository
 import org.parowings.screens.home.Home
+import org.parowings.screens.onboarding.Onboarding
 
 
 object Splash : Screen {
@@ -29,7 +30,11 @@ object Splash : Screen {
         LaunchedEffect(userRepo) {
             userRepo.userSettingsFlow.collectLatest { settings ->
                 if (settings.userId.isNotEmpty()) {
-                    navigator.replace(Home)
+                    navigator.replace(Onboarding)
+                }
+                else{
+                    navigator.replace(Onboarding)
+
                 }
             }
         }
